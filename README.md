@@ -1,7 +1,7 @@
 # Strategy Pattern Practice - Payment Discount
 
 ## Goal
-JDBC 예제가 아닌, 일상적인 도메인(결제/할인)을 통해 **Strategy Pattern**을 손으로 구현하고,
+일상적인 도메인(결제/할인)을 통해 **Strategy Pattern**을 손으로 구현하고,
 “변하는 것(할인 정책)”과 “변하지 않는 것(결제 흐름)”을 분리했을 때 얻는 장점을 체감한다.
 
 ---
