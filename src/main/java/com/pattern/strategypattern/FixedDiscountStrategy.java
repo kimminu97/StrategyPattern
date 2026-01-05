@@ -1,22 +1,25 @@
 package com.pattern.strategypattern;
 
-public class FixedDiscountStrategy implements DiscountStrategy {
-    private final int amount; // 예: 3000
+import java.math.BigDecimal;
 
-    public FixedDiscountStrategy(int amount) {
-        if (amount < 0) {
+public class FixedDiscountStrategy implements DiscountStrategy {
+    private final BigDecimal amount; // 예: 3000
+
+    public FixedDiscountStrategy(BigDecimal amount) {
+        if ( amount.compareTo(BigDecimal.ZERO)  < 0) {
             throw new IllegalArgumentException("amount must be >= 0");
         }
         this.amount = amount;
     }
 
     @Override
-    public int discount(int originPrice) {
-        if (originPrice < 0) {
+    public BigDecimal discount(BigDecimal originPrice) {
+        if (originPrice.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("originPrice must be >= 0");
         }
-        // 할인금액이 원가를 넘지 않게
-        return Math.min(amount, originPrice);
+
+        // 할인금액이 원가를 넘지 않게 방어
+        return amount.min(originPrice);
     }
 
     @Override

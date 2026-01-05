@@ -1,21 +1,38 @@
 package com.pattern.strategypattern;
 
-public class RateDiscountStrategy implements  DiscountStrategy{
-    private final int ratePercent; // 예: 10 = 10%
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 
-    public RateDiscountStrategy(int ratePercent) {
-        if (ratePercent < 0 || ratePercent > 100) {
+public class RateDiscountStrategy implements DiscountStrategy {
+
+    private static final BigDecimal HUNDRED = new BigDecimal("100");
+
+    private final BigDecimal ratePercent; // 예: 10 = 10%
+
+    public RateDiscountStrategy(BigDecimal ratePercent) {
+        if (ratePercent == null) {
+            throw new IllegalArgumentException("ratePercent must not be null");
+        }
+        if (ratePercent.compareTo(BigDecimal.ZERO) < 0
+                || ratePercent.compareTo(HUNDRED) > 0) {
             throw new IllegalArgumentException("ratePercent must be between 0 and 100");
         }
         this.ratePercent = ratePercent;
     }
 
     @Override
-    public int discount(int originPrice) {
-        if (originPrice < 0) {
+    public BigDecimal discount(BigDecimal originPrice) {
+        if (originPrice == null) {
+            throw new IllegalArgumentException("originPrice must not be null");
+        }
+        if (originPrice.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("originPrice must be >= 0");
         }
-        return originPrice * ratePercent / 100;
+
+        // originPrice * ratePercent / 100
+        return originPrice
+                .multiply(ratePercent)
+                .divide(HUNDRED, 0, RoundingMode.DOWN);
     }
 
     @Override

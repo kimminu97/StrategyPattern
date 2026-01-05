@@ -1,12 +1,14 @@
 package com.pattern.strategypattern;
 
+import java.math.BigDecimal;
+
 public class NoDiscountStrategy implements  DiscountStrategy{
     @Override
-    public int discount(int originPrice) {
-        if (originPrice < 0) {
+    public BigDecimal discount(BigDecimal originPrice) {
+        if (originPrice.compareTo(BigDecimal.ZERO) < 0) {
             throw new IllegalArgumentException("originPrice must be >= 0");
         }
-        return 0;
+        return BigDecimal.ZERO;
     }
 
     @Override
